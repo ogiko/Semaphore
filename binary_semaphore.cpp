@@ -31,7 +31,7 @@ void V(Semaphore &s) {
         s.value = 1;
     }
     else {
-        s.q.front();
+        s.value = s.q.front();
         s.q.pop();
         s.cv.notify_one();
     }
@@ -46,17 +46,17 @@ int main() {
         cout << "Thread 1: Kritik bolgeye erisim sagladi." << endl;
         this_thread::sleep_for(chrono::seconds(2));
         cout << "Thread 1: Kritik bolgeden cikti." << endl;
-        V(s); // Kritik bölgeden çýktýktan sonra semaforu serbest býrak
+        V(s); // Kritik bÃ¶lgeden Ã§Ã½ktÃ½ktan sonra semaforu serbest bÃ½rak
     });
 
-    this_thread::sleep_for(chrono::seconds(5)); // Bir süre bekle
+    this_thread::sleep_for(chrono::seconds(5)); // Bir sÃ¼re bekle
 
     thread t2([&s]() {
         P(s); // Semaforu al
         cout << "Thread 2: Kritik bolgeye erisim sagladi." << endl;
         this_thread::sleep_for(chrono::seconds(2));
         cout << "Thread 2: Kritik bolgeden cikti." << endl;
-        V(s); // Kritik bölgeden çýktýktan sonra semaforu serbest býrak
+        V(s); // Kritik bÃ¶lgeden Ã§Ã½ktÃ½ktan sonra semaforu serbest bÃ½rak
     });
 
     t1.join();
